@@ -207,9 +207,9 @@ def format_output(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="recon_pipeline — subdomain enumeration & HTTP recon",
+        description="sentry_recon — subdomain enumeration & HTTP recon",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="Example: python recon_pipeline.py example.com",
+        epilog="Example: python sentry_recon.py example.com",
     )
     parser.add_argument("domain", help="Target root domain (e.g. example.com)")
     args = parser.parse_args()
