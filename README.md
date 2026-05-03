@@ -1,127 +1,190 @@
-# SentryTools — Offensive Security Automation
+# SentryTools — AI-Assisted Security Workflow Automation
 
-SentryTools is a collection of offensive security tooling designed to automate attack surface mapping, reconnaissance, and vulnerability triage.
-
-The goal is not just to scan targets — but to reduce noise, correlate findings, and prioritize real exploitation paths.
+SentryTools is a Python-based security automation project designed to support authorized attack surface analysis, exposure validation, signal correlation, risk prioritization, and remediation-focused reporting.
+The goal is not to generate large volumes of raw scan data, but to reduce noise, correlate signals, and help security teams move from reconnaissance output to actionable security insight.
 
 ---
-
-## ⚔️ Purpose
-
-Modern recon produces massive amounts of data.
-
+## Purpose
+Modern security testing produces large amounts of fragmented data.
 SentryTools focuses on:
-
-- Eliminating noise (false positives, duplicates, wildcards)
-- Correlating multi-tool outputs
-- Identifying high-signal attack vectors
-- Assisting real-world exploitation workflows
-
-> Built for offensive security, not compliance scanning.
-
+- reducing false positives and duplicate signals
+- correlating outputs across multiple discovery and validation stages
+- prioritizing findings based on exploitability and business impact
+- supporting controlled, low-impact validation workflows
+- producing clean, share-safe reporting artifacts
+> Built for authorized security research, AppSec workflows, and offensive security automation.
 ---
-
-## 🧠 Core Capabilities
-
-### 🔍 Recon Orchestration
-- Multi-tool chaining (subfinder, httpx, nuclei, nmap, ffuf, etc.)
-- Modular execution pipeline (run blocks independently)
-- Automated target expansion (subdomains, endpoints, services)
-
-### 🧹 Noise Reduction
-- Wildcard DNS detection
-- Soft-404 baseline filtering
-- Response deduplication
-- Fingerprint-based clustering
-
-### 🔗 Cross-Tool Correlation
-- Subdomain + service + vulnerability linking
-- Ownership validation (e.g. cloud buckets)
-- Exposure verification across multiple signals
-
-### 🎯 Vulnerability Triage
-- Prioritization based on exploitability
-- Signal scoring (confidence vs noise)
-- Focus on real attack paths (not isolated findings)
-
-### 🤖 LLM-Assisted Analysis (Local)
-- Offline analysis via Ollama
-- JSON → structured attack insights
-- No data leakage to external APIs
-- Converts recon output into actionable intelligence
-
+## Core Capabilities
+### Reconnaissance Collection
+- public attack surface mapping
+- subdomain and endpoint discovery
+- HTTP probing and service fingerprinting
+- structured JSON output for downstream analysis
+### Exposure Analysis
+- identification of exposed assets and weak security patterns
+- response behavior analysis
+- access-control and misconfiguration indicators
+- candidate finding generation
+### Controlled Validation
+- low-impact validation of candidate exposures
+- false-positive reduction
+- safe request boundaries
+- authorized-target enforcement
+### Signal Correlation
+- clustering and de-duplication of findings
+- correlation across hosts, endpoints, services, and response patterns
+- confidence scoring
+- signal-over-volume prioritization
+### Risk Prioritization
+- exploitability-based ranking
+- impact-oriented reasoning
+- remediation priority guidance
+- focus on realistic attack paths rather than isolated signals
+### Output Sanitization
+- redaction of sensitive information
+- share-safe report preparation
+- reduction of accidental data exposure
+- compliance-friendly output handling
+### Reporting
+- structured technical summaries
+- evidence-focused finding descriptions
+- remediation guidance
+- final consolidated workflow report
 ---
+## AI-Assisted Orchestration
+SentryTools includes an experimental CrewAI-based orchestrator:
+```text
+ Recon Collection
+      ↓
+ Exposure Analysis
+      ↓
+ Controlled Validation
+      ↓
+ Signal Correlation
+      ↓
+ Risk Prioritization
+      ↓
+ Output Sanitization
+      ↓
+ Report Generation
+```
 
-## ⚙️ Architecture
+The orchestrator is designed to coordinate modular security workflow components while keeping the target URL locked at the orchestration layer.
 
-SentryTools follows a modular pipeline:
+Key design choices:
 
- \[Recon] → \[Filtering] → \[Correlation] → \[Triage] → \[Output] 
+* allowlisted module execution
+* locked authorized target URL
+* local LLM support via Ollama
+* subprocess isolation
+* timeout handling
+* structured logging
+* dry-run mode
+* safe-mode support
 
-Each stage can be executed independently for flexibility and debugging.
+⸻
 
----
+Main Components
 
-## 🔐 Design Principles
+sentry_recon.py
 
-- Offensive-first mindset
-- Automation where it matters
-- Signal over volume
-- Stealth-aware execution (rate limiting, jitter)
-- Local-first (no dependency on external AI APIs)
+A lightweight reconnaissance pipeline for:
 
----
+* subdomain candidate generation
+* DNS resolution
+* HTTP probing
+* wildcard DNS filtering
+* status-code filtering
+* response-size baselining
+* JSON reporting
 
-## 📁 Project Structure
+orchestrator_V2.py
 
- /tools /recon /filtering /correlation /triage /utils 
+An AI-assisted workflow orchestrator designed around authorized security testing.
 
-(structure may evolve as tooling expands)
+Current planned modules:
 
----
+recon_collector.py
+exposure_analyzer.py
+payload_safety_validator.py
+signal_correlator.py
+risk_prioritizer.py
+output_sanitizer.py
+report_generator.py
 
-## 🚧 Status
+The orchestrator uses an allowlist to prevent arbitrary module execution and keeps the target URL locked across all workflow steps.
+
+⸻
+
+Design Principles
+
+* authorized testing only
+* signal over volume
+* low-impact validation
+* local-first AI analysis
+* reproducible workflows
+* structured reporting
+* sensitive-output sanitization
+* remediation-oriented results
+
+⸻
+
+Project Status
 
 Active development.
 
-This repository represents ongoing work to:
+This repository currently represents an evolving security automation prototype focused on:
 
-- Improve recon automation pipelines
-- Enhance signal filtering techniques
-- Integrate AI-assisted vulnerability triage
-- Build scalable offensive workflows
+* improving attack surface workflow automation
+* reducing reconnaissance noise
+* building safer validation pipelines
+* integrating local LLM-assisted triage
+* producing clearer security reports
 
----
+⸻
 
-## 🎯 Use Cases
+Use Cases
 
-- Bug bounty reconnaissance
-- External attack surface mapping
-- Pre-engagement recon for pentests
-- Exposure discovery at scale
-- Rapid triage of large scan outputs
+* authorized external attack surface assessment
+* AppSec research workflows
+* bug bounty reconnaissance within program scope
+* pre-engagement pentest reconnaissance
+* exposure discovery and prioritization
+* security report generation
 
----
+⸻
 
-## ⚠️ Disclaimer
+Responsible Use
 
-This project is intended for:
+This project is intended only for:
 
-- Authorized security testing
-- Research and educational purposes
+* authorized security testing
+* educational research
+* internal security validation
+* defensive exposure analysis
 
-Do not use against systems without permission.
+Do not use this project against systems without explicit permission.
 
----
+⸻
 
-## 📬 Contact
+Related Research
+
+Applied research and anonymized case studies are available in:
+
+SentryTrace / sentrytrace-research
+
+These case studies focus on attack surface exposure, authentication abuse patterns, publicly exposed assets, and remediation-oriented security analysis.
+
+⸻
+
+Contact
 
 contact@sentrytrace.com
 
----
+⸻
 
-## ⚡ Final Note
+Final Note
 
-Tools don’t find vulnerabilities.
+Tools do not replace security reasoning.
 
-Understanding how systems fail does.
+The value of automation is not just speed — it is reducing noise, preserving context, and helping researchers understand how systems fail.
